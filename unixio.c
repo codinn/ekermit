@@ -42,6 +42,8 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
 #ifndef O_WRONLY
 #include <sys/file.h>
 #ifdef X_OK
