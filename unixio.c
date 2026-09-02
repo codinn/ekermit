@@ -130,7 +130,7 @@ dodebug(int fc, UCHAR * label, UCHAR * sval, long nval) {
 */
 int
 devopen(char *device) {
-    ttyfd = 0;
+    ttyfd = STDOUT_FILENO;
     return(1);
 }
 
@@ -145,7 +145,7 @@ int
 pktmode(short on) {
     if (ttyfd < 0)                      /* Device must be open */
       return(0);
-    system(on ? "stty raw -echo" : "stty sane"); /* Crude but effective */
+    // system(on ? "stty raw -echo" : "stty sane"); /* Crude but effective */
     return(1);
 }
 
@@ -270,7 +270,8 @@ readpkt(struct k_data * k, UCHAR *p, int len, int fc) {
 #endif	/* DEBUG */
 
     while (1) {
-        x = getchar();                  /* Replace this with real i/o */
+        read(STDOUT_FILENO, &x, 1);
+        // x = getchar();                  /* Replace this with real i/o */
         c = (k->parity) ? x & 0x7f : x & 0xff; /* Strip parity */
 
 #ifdef F_CTRLC
